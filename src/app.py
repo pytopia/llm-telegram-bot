@@ -101,7 +101,7 @@ def process_message(message):
     reply_to_message = message.reply_to_message
     message_text = get_message_content(message.chat.id, reply_to_message.message_id)
     waiting_message = send_telegram_message(
-        bot, message.chat.id, WAITING_MESSAGE, reply_to_message_id=message.id,
+        bot, message.chat.id, WAITING_MESSAGE, reply_to_message_id=reply_to_message.id,
     )
 
     reply_guideline = message.text.replace(f"@{BOT_USERNAME}", "")
