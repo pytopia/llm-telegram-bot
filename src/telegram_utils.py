@@ -44,17 +44,6 @@ def send_telegram_message(
         reply_markup=reply_markup,
     )
 
-def is_bot_mentioned(message, bot_username):
-    """Check if the bot is mentioned in the message."""
-    if not message.entities:
-        return False
-
-    for entity in message.entities:
-        if entity.type == "mention":
-            mentioned_user = message.text[entity.offset : entity.offset + entity.length]
-            if mentioned_user == f"@{bot_username}":
-                return True
-    return False
 
 def get_message_content(chat_id, message_id):
     try:
