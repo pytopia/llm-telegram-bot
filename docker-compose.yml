@@ -7,5 +7,5 @@ services:
     env_file: .env
     volumes:
       - ./src:/app/src
-      - ./bot.log:/app/bot.log
+      - ./logs:/app/logs
     restart: always
