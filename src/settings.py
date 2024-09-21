@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+from pytz import timezone
+
 WELCOME_MESSAGE = "👋 سلام به ربات سوالات متداول پایتوپیا خوش آمدید 🤖🎉"
 WAITING_MESSAGE = "💡 ربات در حال جستجوی پاسخ شماست..."
 
@@ -30,3 +32,6 @@ Guideline: {reply_guideline}
 
 AUTHORIZED_USERS = os.getenv("AUTHORIZED_USERS", "").split(",")
 AUTHORIZED_USERS = [user.strip().lower() for user in AUTHORIZED_USERS]
+
+TIMEZONE = timezone("UTC")
+DB_NAME = "user.db"

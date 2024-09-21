@@ -2,6 +2,7 @@ import telebot
 
 from src.bot import BOT_USERNAME, bot
 from src.settings import AUTHORIZED_USERS
+from src.db import UserDatabase
 
 
 class IsAdmin(telebot.custom_filters.SimpleCustomFilter):
@@ -29,14 +30,16 @@ def is_bot_mentioned(message, bot_username):
 
 def is_message_from_authorized_user(message):
     from_user = message.user if isinstance(message, telebot.types.MessageReactionUpdated) else message.from_user
-    return from_user.username.lower() in AUTHORIZED_USERS
+    username = from_user.username.lower()
+    with UserDatabase() as db:
+        return db.is_user_authorized(username) and not db.is_rate_limited(username)
 
 
 def is_message_reply_to_message(message):
     return message.reply_to_message is not None
 
 
-def should_process_message(message):
+def is_actionable_message(message):
     conditions = [
         is_bot_mentioned(message, BOT_USERNAME),
         is_message_reply_to_message(message),
@@ -46,7 +49,7 @@ def should_process_message(message):
     return all(conditions)
 
 
-def should_process_reaction(message):
+def is_actionable_reaction(message):
     conditions = [
         is_message_from_authorized_user(message),
     ]

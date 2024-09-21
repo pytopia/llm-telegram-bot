@@ -1,10 +1,10 @@
 
 from src.bot import bot
+from src.filters import is_actionable_message, is_actionable_reaction
+from src.processors import process_message, process_reaction
 from src.settings import (
     WELCOME_MESSAGE,
 )
-from src.filters import should_process_message, should_process_reaction
-from src.processors import process_message, process_reaction
 from src.telegram_utils import (
     send_telegram_message,
 )
@@ -22,11 +22,11 @@ def handle_welcome(message):
 
 def handle_message(message):
     """Handle incoming messages."""
-    if should_process_message(message):
+    if is_actionable_message(message):
         process_message(message)
 
 
 def handle_reaction(message):
     """Handle reactions to messages."""
-    if should_process_reaction(message):
+    if is_actionable_reaction(message):
         process_reaction(message)
