@@ -18,7 +18,7 @@ from src.db import UserDatabase
 
 def log_request(username):
     with UserDatabase() as db:
-        db.log_request(username)
+        db.log_request(username.lower())
 
 
 def process_message(message):
