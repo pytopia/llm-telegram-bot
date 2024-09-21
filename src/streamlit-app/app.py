@@ -43,28 +43,30 @@ def add_user_form(db):
         is_authorized = col3.checkbox("✅ Is Authorized", value=True)
 
         if st.form_submit_button("➕ Add User", use_container_width=True):
-            db.add_user(new_username, is_authorized, new_rate_limit)
+            with db:
+                db.add_user(new_username, is_authorized, new_rate_limit)
             st.success(f"✅ User {new_username} added successfully!")
 
 
 def display_users(db):
     """Displays all users in a table."""
     st.header("👥 All Users")
-    users = db.get_all_users()
+    with db:
+        users = db.get_all_users()
 
-    if users:
-        user_data = []
-        for u, a, r in users:
-            request_count = db.get_user_request_count(u)
-            user_data.append({
-                "👤 Username": u,
-                "✅ Authorized": "Yes" if a else "No",
-                "⏱️ Rate Limit": r,
-                "🔢 Request Count": request_count
-            })
-        st.table(user_data)
-    else:
-        st.info("📭 No users found in the database.")
+        if users:
+            user_data = []
+            for u, a, r in users:
+                request_count = db.get_user_request_count(u)
+                user_data.append({
+                    "👤 Username": u,
+                    "✅ Authorized": "Yes" if a else "No",
+                    "⏱️ Rate Limit": r,
+                    "🔢 Request Count": request_count
+                })
+            st.table(user_data)
+        else:
+            st.info("📭 No users found in the database.")
 
     return users
 
@@ -77,7 +79,8 @@ def update_user_form(db, users):
         username = col1.selectbox("👤 Select User", [user[0] for user in users])
         rate_limit = col2.number_input("⏱️ New Rate Limit", min_value=1, value=100)
         is_authorized = col3.checkbox("✅ Is Authorized", value=True)
-        request_count = db.get_user_request_count(username)
+        with db:
+            request_count = db.get_user_request_count(username)
         col4.metric("🔢 Request Count", request_count)
 
         col1, col2 = st.columns(2)
@@ -85,12 +88,14 @@ def update_user_form(db, users):
         delete_button = col2.form_submit_button("🗑️ Delete User", use_container_width=True)
 
         if update_button:
-            db.add_user(username, is_authorized, rate_limit)
+            with db:
+                db.add_user(username, is_authorized, rate_limit)
             st.success(f"✅ User {username} updated successfully!")
             st.rerun()
 
         if delete_button:
-            db.delete_user(username)
+            with db:
+                db.delete_user(username)
             st.success(f"🗑️ User {username} deleted successfully!")
             st.rerun()
 
@@ -98,10 +103,11 @@ def update_user_form(db, users):
 def main():
     st.title("🤖 Telegram Bot User Management")
 
-    with UserDatabase() as db:
-        add_user_form(db)
-        users = display_users(db)
-        update_user_form(db, users)
+    db = UserDatabase()
+
+    add_user_form(db)
+    users = display_users(db)
+    update_user_form(db, users)
 
 
 if __name__ == "__main__":
