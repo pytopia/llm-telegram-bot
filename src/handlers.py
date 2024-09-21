@@ -1,6 +1,6 @@
 
 from src.bot import bot
-from src.constants import (
+from src.settings import (
     WELCOME_MESSAGE,
 )
 from src.filters import should_process_message, should_process_reaction

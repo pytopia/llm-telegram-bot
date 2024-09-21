@@ -1,12 +1,12 @@
+import os
 from pathlib import Path
 
 WELCOME_MESSAGE = "👋 سلام به ربات سوالات متداول پایتوپیا خوش آمدید 🤖🎉"
 WAITING_MESSAGE = "💡 ربات در حال جستجوی پاسخ شماست..."
-MAX_RESPONSE_LENGTH = 500
+
+CONTEXT = Path("src/context.txt").read_text()
+
 LLM_MODEL = "gpt-4o"
-
-context = Path("src/context.txt").read_text()
-
 SYSTEM_PROMPT = f"""You are a helpful assistant.
 - Only use valid markdown in your response and do not use any other formatting.
 - Always respond briefly. This is for a telegram group chat.
@@ -20,10 +20,13 @@ but your actual problem description may pique their interest and get them to ans
 Use this context to answer the questions
 (if the question is not related to this context,
 ignore the context and answer the question as best as you can and as short as possible):
-Context: {context}
+Context: {CONTEXT}
 """
 
 REPLY_SYSTEM_PROMPT = SYSTEM_PROMPT + """
 Answer the following question according to the guideline.
 Guideline: {reply_guideline}
 """
+
+AUTHORIZED_USERS = os.getenv("AUTHORIZED_USERS", "").split(",")
+AUTHORIZED_USERS = [user.strip().lower() for user in AUTHORIZED_USERS]

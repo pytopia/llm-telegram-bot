@@ -3,7 +3,7 @@ import emoji
 from loguru import logger
 
 from bot import BOT_USERNAME, bot
-from src.constants import (
+from src.settings import (
     LLM_MODEL,
     REPLY_SYSTEM_PROMPT,
     SYSTEM_PROMPT,

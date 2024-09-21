@@ -1,7 +1,7 @@
 import telebot
 
 from src.bot import BOT_USERNAME, bot
-from src.config import APPROVED_CHATS
+from src.settings import AUTHORIZED_USERS
 
 
 class IsAdmin(telebot.custom_filters.SimpleCustomFilter):
@@ -10,12 +10,7 @@ class IsAdmin(telebot.custom_filters.SimpleCustomFilter):
 
     @staticmethod
     def check(message: telebot.types.Message):
-
-        if isinstance(message, telebot.types.MessageReactionUpdated):  # noqa
-            from_user = message.user
-        else:
-            from_user = message.from_user
-
+        from_user = message.user if isinstance(message, telebot.types.MessageReactionUpdated) else message.from_user
         return bot.get_chat_member(message.chat.id, from_user.id).status in ["administrator", "creator"]
 
 
@@ -32,9 +27,9 @@ def is_bot_mentioned(message, bot_username):
     return False
 
 
-def is_message_in_approved_chats(message):
-    chat_username = message.chat.username.lower()
-    return chat_username in APPROVED_CHATS
+def is_message_from_authorized_user(message):
+    from_user = message.user if isinstance(message, telebot.types.MessageReactionUpdated) else message.from_user
+    return from_user.username.lower() in AUTHORIZED_USERS
 
 
 def is_message_reply_to_message(message):
@@ -45,7 +40,7 @@ def should_process_message(message):
     conditions = [
         is_bot_mentioned(message, BOT_USERNAME),
         is_message_reply_to_message(message),
-        is_message_in_approved_chats(message),
+        is_message_from_authorized_user(message),
     ]
 
     return all(conditions)
@@ -53,6 +48,6 @@ def should_process_message(message):
 
 def should_process_reaction(message):
     conditions = [
-        is_message_in_approved_chats(message),
+        is_message_from_authorized_user(message),
     ]
     return all(conditions)
