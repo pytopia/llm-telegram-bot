@@ -30,8 +30,5 @@ Answer the following question according to the guideline.
 Guideline: {reply_guideline}
 """
 
-AUTHORIZED_USERS = os.getenv("AUTHORIZED_USERS", "").split(",")
-AUTHORIZED_USERS = [user.strip().lower() for user in AUTHORIZED_USERS]
-
 TIMEZONE = timezone("UTC")
 DB_NAME = "user.db"

@@ -1,7 +1,6 @@
 import telebot
 
 from src.bot import BOT_USERNAME, bot
-from src.settings import AUTHORIZED_USERS
 from src.db import UserDatabase
 
 
