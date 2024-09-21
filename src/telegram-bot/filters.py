@@ -1,6 +1,6 @@
 import telebot
+from bot import BOT_USERNAME, bot
 
-from src.bot import BOT_USERNAME, bot
 from src.db import UserDatabase
 
 

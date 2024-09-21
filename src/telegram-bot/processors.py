@@ -1,20 +1,19 @@
 import emoji
-from loguru import logger
-
 from bot import BOT_USERNAME, bot
-from src.db import UserDatabase
-from src.enums import Emoji
-from src.llm import call_llm
-from src.settings import (
+from enums import Emoji
+from llm import call_llm
+from settings import (
     LLM_MODEL,
     REPLY_SYSTEM_PROMPT,
     SYSTEM_PROMPT,
     WAITING_MESSAGE,
 )
-from src.telegram_utils import (
+from telegram_utils import (
     get_message_content,
     send_telegram_message,
 )
+
+from src.db import UserDatabase
 
 
 def log_request(username):

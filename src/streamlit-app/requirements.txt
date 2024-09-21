@@ -1,0 +1,4 @@
+auto_mix_prep==0.2.0
+python-dotenv==1.0.1
+streamlit==1.38.0
+pytz==2023.3.post1

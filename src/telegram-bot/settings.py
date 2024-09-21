@@ -1,12 +1,9 @@
-import os
 from pathlib import Path
-
-from pytz import timezone
 
 WELCOME_MESSAGE = "👋 سلام به ربات سوالات متداول پایتوپیا خوش آمدید 🤖🎉"
 WAITING_MESSAGE = "💡 ربات در حال جستجوی پاسخ شماست..."
 
-CONTEXT = Path("src/context.txt").read_text()
+CONTEXT = Path("src/telegram-bot/context.txt").read_text()
 
 LLM_MODEL = "gpt-4o"
 SYSTEM_PROMPT = f"""You are a helpful assistant.
@@ -29,6 +26,3 @@ REPLY_SYSTEM_PROMPT = SYSTEM_PROMPT + """
 Answer the following question according to the guideline.
 Guideline: {reply_guideline}
 """
-
-TIMEZONE = timezone("UTC")
-DB_NAME = "user.db"

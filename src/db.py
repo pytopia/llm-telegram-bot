@@ -1,11 +1,12 @@
 import sqlite3
 from datetime import datetime, timedelta
 
-from src.settings import DB_NAME, TIMEZONE
+from pytz import timezone
 
+TIMEZONE = timezone("UTC")
 
 class UserDatabase:
-    def __init__(self, db_name=DB_NAME):
+    def __init__(self, db_name="src/user.db"):
         self.db_name = db_name
         self.conn = None
         self.cursor = None

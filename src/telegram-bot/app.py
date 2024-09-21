@@ -1,11 +1,10 @@
 import argparse
 import sys
 
-from loguru import logger
-
 from bot import bot
-from src.filters import IsAdmin
-from src.handlers import handle_message, handle_reaction, handle_welcome
+from filters import IsAdmin
+from handlers import handle_message, handle_reaction, handle_welcome
+from loguru import logger
 
 
 def configure_logger(verbose):

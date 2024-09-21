@@ -1,11 +1,11 @@
 
-from src.bot import bot
-from src.filters import is_actionable_message, is_actionable_reaction
-from src.processors import process_message, process_reaction
-from src.settings import (
+from bot import bot
+from filters import is_actionable_message, is_actionable_reaction
+from processors import process_message, process_reaction
+from settings import (
     WELCOME_MESSAGE,
 )
-from src.telegram_utils import (
+from telegram_utils import (
     send_telegram_message,
 )
 

@@ -1,0 +1,7 @@
+auto_mix_prep==0.2.0
+emoji==2.13.0
+loguru==0.7.0
+openai==1.47.0
+pyTelegramBotAPI==4.23.0
+python-dotenv==1.0.1
+pytz==2023.3.post1

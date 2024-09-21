@@ -1,6 +1,5 @@
+from bot import bot
 from loguru import logger
-
-from src.bot import bot
 
 
 def send_telegram_message(

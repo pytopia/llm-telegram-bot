@@ -1,6 +1,5 @@
 import os
 
-from loguru import logger
 from openai import OpenAI
 
 assert os.getenv("OPENAI_API_KEY") is not None, "OPENAI_API_KEY is not set"

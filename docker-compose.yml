@@ -2,10 +2,26 @@ version: '3'
 
 services:
   my-telegram-bot:
-    build: .
+    build:
+      context: .
+      dockerfile: src/telegram-bot/Dockerfile
     container_name: my-telegram-bot
     env_file: .env
     volumes:
       - ./src:/app/src
       - ./logs:/app/logs
     restart: always
+
+  streamlit-dashboard:
+    build:
+      context: .
+      dockerfile: src/streamlit-app/Dockerfile
+    container_name: streamlit-dashboard
+    env_file: .env
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "8501:8501"
+    restart: always
+    depends_on:
+      - my-telegram-bot
