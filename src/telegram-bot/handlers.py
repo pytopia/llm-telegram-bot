@@ -5,12 +5,13 @@ from processors import process_message, process_reaction
 from settings import (
     WELCOME_MESSAGE,
 )
+from telebot.types import Message
 from telegram_utils import (
     send_telegram_message,
 )
 
 
-def handle_welcome(message):
+def handle_welcome(message: Message):
     """Send welcome message for /start and /help commands."""
     send_telegram_message(
         bot,
@@ -20,13 +21,13 @@ def handle_welcome(message):
     )
 
 
-def handle_message(message):
+def handle_message(message: Message):
     """Handle incoming messages."""
     if is_actionable_message(message):
         process_message(message)
 
 
-def handle_reaction(message):
+def handle_reaction(message: Message):
     """Handle reactions to messages."""
     if is_actionable_reaction(message):
         process_reaction(message)

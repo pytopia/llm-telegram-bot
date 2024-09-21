@@ -6,7 +6,7 @@ assert os.getenv("OPENAI_API_KEY") is not None, "OPENAI_API_KEY is not set"
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
-def call_llm(prompt, model="gpt-4o-mini", system_prompt="You are a helpful assistant."):
+def call_llm(prompt: str, model: str = "gpt-4o-mini", system_prompt: str = "You are a helpful assistant.") -> str:
     response = client.chat.completions.create(
         model=model,
         messages=[

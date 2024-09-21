@@ -7,7 +7,7 @@ from handlers import handle_message, handle_reaction, handle_welcome
 from loguru import logger
 
 
-def configure_logger(verbose):
+def configure_logger(verbose: bool):
     log_level = "DEBUG" if verbose else "INFO"
     logger.remove()  # Remove the default handler
     logger.add(sys.stderr, level=log_level)

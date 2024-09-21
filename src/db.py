@@ -49,7 +49,7 @@ class UserDatabase:
         self.cursor.execute("SELECT username, is_authorized, rate_limit FROM users")
         return self.cursor.fetchall()
 
-    def add_user(self, username, is_authorized=True, rate_limit=100):
+    def add_user(self, username: str, is_authorized: bool = True, rate_limit: int = 100):
         self.cursor.execute(
             """
         INSERT OR REPLACE INTO users (username, is_authorized, rate_limit)
@@ -58,24 +58,24 @@ class UserDatabase:
             (username, is_authorized, rate_limit),
         )
 
-    def delete_user(self, username):
+    def delete_user(self, username: str):
         self.cursor.execute("DELETE FROM users WHERE username = ?", (username,))
 
-    def is_user_authorized(self, username):
+    def is_user_authorized(self, username: str) -> bool:
         self.cursor.execute("SELECT is_authorized FROM users WHERE username = ? and is_authorized = 1", (username,))
         result = self.cursor.fetchone()
         return result[0] if result else False
 
-    def get_user_rate_limit(self, username):
+    def get_user_rate_limit(self, username: str) -> int | None:
         self.cursor.execute("SELECT rate_limit FROM users WHERE username = ?", (username,))
         result = self.cursor.fetchone()
         return result[0] if result else None
 
-    def log_request(self, username):
+    def log_request(self, username: str):
         current_time = datetime.now(tz=TIMEZONE)
         self.cursor.execute("INSERT INTO requests (username, timestamp) VALUES (?, ?)", (username, current_time))
 
-    def is_rate_limited(self, username):
+    def is_rate_limited(self, username: str) -> bool:
         rate_limit = self.get_user_rate_limit(username)
         if rate_limit is None:
             return True
@@ -83,7 +83,7 @@ class UserDatabase:
         request_count = self.get_user_request_count(username)
         return request_count >= rate_limit
 
-    def get_user_request_count(self, username):
+    def get_user_request_count(self, username: str) -> int:
         one_day_ago = datetime.now(tz=TIMEZONE) - timedelta(days=1)
         self.cursor.execute(
             """

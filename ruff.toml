@@ -7,7 +7,7 @@ lint.select = [
 ]
 lint.ignore = [
   "RUF012", "S101", "TRY003", "PLR0913", "PLR0917", "DJ001", "PLR6301", "PLR6301", "RET503",
-  "S308", "ERA001"
+  "S308", "ERA001", "SIM108",
 ]
 
 lint.fixable = ["ALL"]

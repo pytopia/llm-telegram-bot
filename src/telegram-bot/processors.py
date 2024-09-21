@@ -8,6 +8,7 @@ from settings import (
     SYSTEM_PROMPT,
     WAITING_MESSAGE,
 )
+from telebot.types import Message
 from telegram_utils import (
     get_message_content,
     send_telegram_message,
@@ -16,12 +17,12 @@ from telegram_utils import (
 from src.db import UserDatabase
 
 
-def log_request(username):
+def log_request(username: str):
     with UserDatabase() as db:
         db.log_request(username.lower())
 
 
-def process_message(message):
+def process_message(message: Message):
     """Process messages where the bot is mentioned."""
     reply_to_message = message.reply_to_message
     message_text = get_message_content(message.chat.id, reply_to_message.message_id)
@@ -41,7 +42,7 @@ def process_message(message):
     log_request(message.from_user.username)
 
 
-def process_reaction(message):
+def process_reaction(message: Message):
     """Process reactions to messages."""
     if not hasattr(message.new_reaction[-1], "emoji"):
         return
@@ -62,6 +63,6 @@ def process_reaction(message):
         bot.delete_message(message.chat.id, message.message_id)
 
 
-def send_llm_response(message, response):
+def send_llm_response(message: Message, response: str):
     """Send response, handling long messages with a 'Show More' button."""
     send_telegram_message(bot, message.chat.id, response, edit_message_id=message.id)

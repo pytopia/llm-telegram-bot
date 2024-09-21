@@ -1,14 +1,16 @@
 from bot import bot
 from loguru import logger
+from telebot import TeleBot
+from telebot.types import InlineKeyboardMarkup
 
 
 def send_telegram_message(
-    bot,
-    chat_id,
-    text,
-    edit_message_id=None,
-    reply_to_message_id=None,
-    reply_markup=None,
+    bot: TeleBot,
+    chat_id: int,
+    text: str,
+    edit_message_id: int | None = None,
+    reply_to_message_id: int | None = None,
+    reply_markup: InlineKeyboardMarkup | None = None,
 ):
     """Unified function to send, edit, or reply to messages in a Telegram bot.
 
@@ -44,7 +46,11 @@ def send_telegram_message(
     )
 
 
-def get_message_content(chat_id, message_id):
+def get_message_content(chat_id: int, message_id: int) -> str:
+    """Get the content of a message by forwarding it to the same chat.
+    Telegram bot cannot access the content of a message having just the message_id
+    but we can forward the message to the same chat and get the content of the forwarded message.
+    """
     try:
         # Forward the message to the same chat
         forwarded_message = bot.forward_message(chat_id, chat_id, message_id)
