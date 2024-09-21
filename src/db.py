@@ -80,6 +80,10 @@ class UserDatabase:
         if rate_limit is None:
             return True
 
+        request_count = self.get_user_request_count(username)
+        return request_count >= rate_limit
+
+    def get_user_request_count(self, username):
         one_day_ago = datetime.now(tz=TIMEZONE) - timedelta(days=1)
         self.cursor.execute(
             """
@@ -89,5 +93,4 @@ class UserDatabase:
             (username, one_day_ago),
         )
 
-        request_count = self.cursor.fetchone()[0]
-        return request_count >= rate_limit
+        return self.cursor.fetchone()[0] or 0
