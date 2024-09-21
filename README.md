@@ -1,85 +1,52 @@
-# LLM Telegram Bot
+# Telegram Bot with User Management Dashboard
 
-This project is a Telegram bot powered by GPT-4, designed to answer questions and provide assistance in approved chat groups.
-
-Here is the project structure:
-
-```
-.
-├── src/
-│   ├── app.py
-│   ├── bot.py
-│   ├── config.py
-│   ├── constants.py
-│   ├── enums.py
-│   ├── filters.py
-│   ├── handlers.py
-│   ├── llm.py
-│   ├── processors.py
-│   └── telegram_utils.py
-├── .dockerignore
-├── .env
-├── .gitignore
-├── docker-compose.yml
-├── Dockerfile
-├── README.md
-├── requirements.txt
-└── ruff.toml
-```
-
-## Setup and Running
-
-1. **Environment Variables**: Copy the `.env.example` file to `.env` and fill in the required values:
-
-```
-BOT_TOKEN="your_telegram_bot_token"
-APPROVED_CHATS="chat1,chat2"
-OPENAI_API_KEY="your_openai_api_key"
-```
-
-2. **Install Dependencies**: Install the required packages:
-
-```
-pip install -r requirements.txt
-```
-
-3. **Run the Bot**: You can run the bot directly using Python:
-
-```
-python src/app.py
-```
-
-   Or use Docker Compose:
-
-```
-docker-compose up --build
-```
-
-## Key Components
-
-- `src/app.py`: Main entry point of the application.
-- `src/bot.py`: Initializes the Telegram bot.
-- `src/llm.py`: Handles interactions with the GPT-4 model.
-- `src/handlers.py`: Contains message and reaction handlers.
-- `src/processors.py`: Processes messages and reactions.
-- `src/filters.py`: Defines filters for message processing.
-- `src/telegram_utils.py`: Utility functions for Telegram operations.
+This project consists of a Telegram bot with an accompanying Streamlit dashboard for user management.
 
 ## Features
 
-- Responds to messages when mentioned in approved chat groups.
-- Processes reactions to messages.
-- Uses GPT-4 to generate responses.
-- Supports admin-only operations.
+- Telegram bot with AI-powered responses
+- User authorization and rate limiting
+- Admin dashboard for user management
+- Docker containerization for easy deployment
 
-## Logging
+## Setup
 
-Logs are stored in the `logs/` directory. The log level can be adjusted by running the bot with the `--verbose` flag:
+1. Clone the repository
+2. Copy `.env.example` to `.env` and fill in the required values
+3. Build and run the Docker containers:
 
+```bash
+docker-compose up --build
 ```
-python src/app.py --verbose
-```
 
-## Contributing
+## Components
 
-Feel free to submit issues or pull requests if you have suggestions for improvements or find any bugs.
+### Telegram Bot
+
+- Located in `src/telegram-bot/`
+- Handles message processing and AI responses
+- Uses OpenAI's API for generating responses
+
+### Streamlit Dashboard
+
+- Located in `src/streamlit-app/`
+- Provides an interface for managing bot users
+- Accessible at `http://localhost:8501`
+
+### Database
+
+- SQLite database for storing user information
+- Managed through `src/db.py`
+
+## Usage
+
+- Interact with the bot on Telegram
+- Access the admin dashboard to manage users
+
+## Development
+
+To run the project locally without Docker:
+
+1. Install requirements for both the bot and dashboard
+2. Run the bot: `python src/telegram-bot/app.py`
+3. Run the dashboard: `streamlit run src/streamlit-app/app.py`
